@@ -1,5 +1,6 @@
 import requests as res
 import json
+import yaml
 url = 'https://user.qingting.fm/u2/api/v4/user/login'
 h = {
     'Content-Type': 'application/json',
@@ -12,14 +13,14 @@ password = input('密码')
 
 d = {"account_type":"5","device_id":"web","user_id":user_id,"password":password,"area_code":"+86"}
 s = res.post(url, json.dumps(d), headers=h)
-data = s.json()['data']  # ['qingting_id']
-print(data)
+data = s.json()['data']
 qingting_id = data['qingting_id']
 access_token = data['access_token']
 cookie = s.headers['Set-Cookie'].replace('path=/,', '').replace('path=/', '')
-w = open('cookie.txt', 'w+')
-w.write(cookie + 'qingting_id=' + qingting_id)
-w2 = open('access_token.txt', 'w+')
-w2.write(access_token)
-w3 = open('qingting_id.txt', 'w+')
-w3.write(qingting_id)
+w=open('config.yaml','w')
+data = {
+    'cookie': cookie,
+    'access_token': access_token,
+    'qingting_id': qingting_id,
+}
+yaml.dump(data,w)
