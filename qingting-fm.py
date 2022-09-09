@@ -6,6 +6,7 @@ import hmac
 import time
 import requests as res
 import pyaria2
+import yaml
 
 rpc = pyaria2.Aria2RPC()
 
@@ -20,9 +21,11 @@ logo = '''
                                                 by laowei
 '''
 
-cookie = open('cookie.txt', 'r').read()
-qingting_id = open('qingting_id.txt', 'r').read()
-access_token = open('access_token.txt', 'r').read()
+config_file = open('config.yaml')
+config = yaml.load(config_file,Loader=yaml.Loader)
+cookie = config['cookie']
+qingting_id = config['qingting_id']
+access_token = config['access_token']
 
 
 h = {
