@@ -21,6 +21,9 @@ logo = '''
 '''
 
 cookie = open('cookie.txt', 'r').read()
+qingting_id = open('qingting_id.txt', 'r').read()
+access_token = open('access_token.txt', 'r').read()
+
 
 h = {
 
@@ -47,11 +50,10 @@ def download(title, url):
 
 def getm4a(title, uid, item_id):
     ts = int(time.time() * 1000)
-    sign_data = f'/audiostream/redirect/{uid}/{item_id}?access_token=&device_id=MOBILESITE&qingting_id=&t={ts}'
+    sign_data = f'/audiostream/redirect/{uid}/{item_id}?access_token={access_token}&device_id=MOBILESITE&qingting_id={qingting_id}&t={ts}'
     sig = sign(sign_data)
-    url = f'https://audio.qtfm.cn/audiostream/redirect/{uid}/{item_id}?access_token=&device_id=MOBILESITE&qingting_id=&t={ts}&sign={sig}'
+    url = f'https://audio.qtfm.cn/audiostream/redirect/{uid}/{item_id}?access_token={access_token}&device_id=MOBILESITE&qingting_id={qingting_id}&t={ts}&sign={sig}'
     s = res.get(url, allow_redirects=False, headers=h).headers['Location']
-
     download(title, s)
 
 
@@ -66,8 +68,14 @@ def get_list(name, uid, vid):
         for i in s:
             title = i['title']
             item_id = i['id']
-            getm4a(name + '/' + title, uid, item_id)
-            print(title)
+            try:
+                getm4a(name + '/' + title, uid, item_id)
+                print(title,'ok')
+            except Exception as e:
+                if e.args[0] == 'location':
+                    print('付费内容')
+                else:
+                    print('Error')
         page += 1
 
 
@@ -89,3 +97,4 @@ def main():
 if __name__ == '__main__':
     # 402683
     main()
+
