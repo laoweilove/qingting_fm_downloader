@@ -22,18 +22,14 @@ logo = '''
 '''
 
 config_file = open('config.yaml')
-config = yaml.load(config_file,Loader=yaml.Loader)
+config = yaml.load(config_file, Loader=yaml.Loader)
 cookie = config['cookie']
 qingting_id = config['qingting_id']
 access_token = config['access_token']
 
-
 h = {
-
     'Cookie': cookie,
-
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44',
-
 }
 
 
@@ -73,7 +69,7 @@ def get_list(name, uid, vid):
             item_id = i['id']
             try:
                 getm4a(name + '/' + title, uid, item_id)
-                print(title,'ok')
+                print(title, 'ok')
             except Exception as e:
                 if e.args[0] == 'location':
                     print('付费内容')
@@ -100,4 +96,3 @@ def main():
 if __name__ == '__main__':
     # 402683
     main()
-
