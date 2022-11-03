@@ -16,3 +16,6 @@
  - 按提示输入手机号和密码，cookie，qingting_id，access_token就都保存在config.yaml文件中了
  - 打开专辑网页如  https://www.qingting.fm/channels/402683/  channels后面的这组数字就是专辑id
  - 使用`python3 qingting-fm.py`，然后输入刚才得到的专辑id，即可下载该专辑的全部内容
+
+## 11.3更新
+修改login方式，只需将账号密码保存在yaml中即可使用login.py自动登录
